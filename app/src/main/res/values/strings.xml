@@ -2,4 +2,13 @@
     <string name="app_name">Yolo</string>
     <string name="navigation_drawer_open">navigation_drawer_open</string>
     <string name="navigation_drawer_close">navigation_drawer_close</string>
+    <string name="ic_home">Home</string>
+    <string name="ic_popular">Popular</string>
+    <string name="ic_random">Random</string>
+    <string name="ic_like">Like</string>
+    <string name="ic_history">History</string>
+    <string name="ic_about">About</string>
+    <string name="photo_source">Photo source</string>
+    <string name="unsplash_ic">unsplash_ic</string>
+    <string name="search">Search</string>
 </resources>
