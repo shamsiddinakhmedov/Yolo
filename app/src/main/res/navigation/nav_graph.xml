@@ -12,8 +12,8 @@
         tools:layout="@layout/fragment_main" />
     <fragment
         android:id="@+id/imagesFragment"
-        android:name="com.example.yolo.presentation.view.fragment.images.ImagesFragment"
+        android:name="com.example.yolo.presentation.view.fragment.photos.PhotosFragment"
         android:label="fragment_images"
-        tools:layout="@layout/fragment_images" />
+        tools:layout="@layout/fragment_photos" />
 
 </navigation>

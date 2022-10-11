@@ -8,19 +8,19 @@
     <shape
         android:innerRadiusRatio="3"
         android:shape="ring"
-        android:thicknessRatio="8"
+        android:thicknessRatio="10"
         android:useLevel="false">
 
         <size
-            android:width="76dip"
-            android:height="76dip" />
+            android:width="64dip"
+            android:height="64dip" />
 
         <!--set the color gradients
             of the shape-->
         <gradient
             android:angle="0"
             android:endColor="#00ffffff"
-            android:startColor="@color/theme"
+            android:startColor="@color/teal_700"
             android:type="sweep"
             android:useLevel="false" />
     </shape>

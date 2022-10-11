@@ -3,13 +3,21 @@ package com.example.yolo.presentation.view.fragment.main
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import com.example.yolo.R
 import com.example.yolo.databinding.FragmentMainBinding
 import com.example.yolo.domain.model.NavigationItemModel
@@ -20,12 +28,14 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::inflate) {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationRVAdapter: NavigationRVAdapter
     private lateinit var viewPagerAdapter: ViewPagerAdapter
+    private lateinit var menuHost: MenuHost
 
     private val viewModel by viewModels<MainFragmentViewModel>()
     private val itemsNavigation = arrayListOf(
@@ -40,10 +50,11 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         "All", "New", "Animals", "Technology", "Nature"
     )
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         drawerLayout = requireView().findViewById(R.id.drawer_layout)
+
+        (activity as AppCompatActivity?)!!.setSupportActionBar(binding.activityMainToolbar)
 
         setNavigationDrawer()
 
@@ -51,6 +62,28 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
 
         initUi()
 
+        menuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu, menu)
+                val searchItem = menu.findItem(R.id.search)
+                val searchView = searchItem.actionView as SearchView
+                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        if (query != null) {
+                            viewModel
+                        }
+                        return true
+                    }
+
+                    override fun onQueryTextChange(p0: String?): Boolean = true
+                })
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun setNavigationDrawer() = with(binding) {

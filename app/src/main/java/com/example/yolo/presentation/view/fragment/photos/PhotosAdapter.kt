@@ -1,4 +1,4 @@
-package com.example.yolo.presentation.view.fragment.images
+package com.example.yolo.presentation.view.fragment.photos
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,31 +8,34 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.yolo.R
-import com.example.yolo.databinding.ImageItemBinding
+import com.example.yolo.databinding.PhotoItemBinding
 import com.example.yolo.domain.model.unsplash.Photos
-import com.example.yolo.domain.model.unsplash.Urls
 
-class ImagesAdapter(val onclick: (Photos) -> Unit) :
-    PagingDataAdapter<Photos, ImagesAdapter.ViewHolder>(DIFF_UTIL) {
+class PhotosAdapter(val onClick: (Photos) -> Unit) :
+    PagingDataAdapter<Photos, PhotosAdapter.ViewHolder>(DIFF_UTIL) {
 
-    inner class ViewHolder(private val binding: ImageItemBinding) :
+    inner class ViewHolder(private val binding: PhotoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(urls: Urls) = with(binding) {
+        fun onBind(photos: Photos) = with(binding) {
             Glide.with(root.context)
-                .load(urls.small)
+                .load(photos.urls.small)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .error(R.drawable.error)
                 .into(image)
+
+            root.setOnClickListener {
+                onClick(photos)
+            }
         }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(getItem(position)?.urls ?: return)
+        holder.onBind(getItem(position) ?: return)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
-        ImageItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        PhotoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
     companion object {

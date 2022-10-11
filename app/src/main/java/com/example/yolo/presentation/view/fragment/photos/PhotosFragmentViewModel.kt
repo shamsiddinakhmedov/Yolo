@@ -1,4 +1,4 @@
-package com.example.yolo.presentation.view.fragment.images
+package com.example.yolo.presentation.view.fragment.photos
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
@@ -7,12 +7,12 @@ import androidx.paging.cachedIn
 import com.example.yolo.app.common.Constants
 import com.example.yolo.data.repo.PhotoRepository
 import com.example.yolo.presentation.architecture.BaseViewModel
-import com.example.yolo.presentation.view.fragment.images.ImagesFragmentViewModel.*
+import com.example.yolo.presentation.view.fragment.photos.PhotosFragmentViewModel.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ImagesFragmentViewModel @Inject constructor(
+class PhotosFragmentViewModel @Inject constructor(
     private val repository: PhotoRepository
 ) : BaseViewModel<State, Input, Effect>() {
 
