@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Yolo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorPrimary">@color/theme_navigation_drawer</item>
+        <item name="colorPrimaryVariant">@color/theme_navigation_drawer</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/black</item>

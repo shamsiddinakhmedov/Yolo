@@ -3,23 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainActivity">
-
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.example.yolo.presentation.view.main.MainActivity"
-        android:label="MainActivity"
-        tools:layout="@layout/activity_main" />
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.yolo.presentation.view.main.fragment.MainFragment"
-        android:label="MainFragment"
+        android:name="com.example.yolo.presentation.view.fragment.main.MainFragment"
+        android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
-
     <fragment
-        android:id="@+id/imageFragment"
-        android:name="com.example.yolo.presentation.view.main.fragment.ImageFragment"
-        android:label="ImageFragment"
-        tools:layout="@layout/fragment_image" />
+        android:id="@+id/imagesFragment"
+        android:name="com.example.yolo.presentation.view.fragment.images.ImagesFragment"
+        android:label="fragment_images"
+        tools:layout="@layout/fragment_images" />
+
 </navigation>

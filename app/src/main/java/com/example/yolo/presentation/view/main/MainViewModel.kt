@@ -10,7 +10,8 @@ class MainViewModel @Inject constructor() : BaseViewModel<State, Input, Effect>(
 
     class State
 
-    sealed class Input
+    sealed class Input {
+    }
 
     sealed class Effect
 

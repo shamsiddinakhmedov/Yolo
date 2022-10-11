@@ -1,4 +1,4 @@
-package com.example.yolo.presentation.view.main.navigation
+package com.example.yolo.presentation.view.navigationDrawer
 
 import android.content.Context
 import android.view.GestureDetector
