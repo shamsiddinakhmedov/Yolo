@@ -9,11 +9,42 @@
         android:id="@+id/mainFragment"
         android:name="com.example.yolo.presentation.view.fragment.main.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_photoFragment"
+            app:destination="@id/photoFragment" />
+    </fragment>
+
     <fragment
-        android:id="@+id/imagesFragment"
+        android:id="@+id/photosFragment"
         android:name="com.example.yolo.presentation.view.fragment.photos.PhotosFragment"
         android:label="fragment_images"
         tools:layout="@layout/fragment_photos" />
+
+
+    <fragment
+        android:id="@+id/folderFragment"
+        android:name="com.example.yolo.presentation.view.fragment.folder.FolderFragment"
+        android:label="FolderFragment"
+        tools:layout="@layout/fragment_folder">
+        <argument
+            android:name="query"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="com.example.yolo.presentation.view.fragment.photo.PhotoFragment"
+        android:label="PhotoFragment"
+        tools:layout="@layout/fragment_photo">
+
+        <argument
+            android:name="photo"
+            android:defaultValue="@null"
+            app:argType="com.example.yolo.domain.model.unsplash.Photos"
+            app:nullable="true" />
+    </fragment>
 
 </navigation>

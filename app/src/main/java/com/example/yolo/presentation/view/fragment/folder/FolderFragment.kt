@@ -1,33 +1,33 @@
-package com.example.yolo.presentation.view.fragment.photos
+package com.example.yolo.presentation.view.fragment.folder
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
-import com.example.yolo.databinding.FragmentPhotosBinding
+import com.example.yolo.databinding.FragmentFolderBinding
 import com.example.yolo.domain.model.unsplash.Photos
 import com.example.yolo.presentation.architecture.BaseFragment
-import com.example.yolo.presentation.view.fragment.main.MainFragmentDirections
+import com.example.yolo.presentation.view.fragment.photos.PhotoLoadStateAdapter
+import com.example.yolo.presentation.view.fragment.photos.PhotosAdapter
+import com.example.yolo.presentation.view.fragment.photos.PhotosFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-private const val arg_query = "query"
-
 @AndroidEntryPoint
-class PhotosFragment : BaseFragment<FragmentPhotosBinding>(FragmentPhotosBinding::inflate) {
+class FolderFragment : BaseFragment<FragmentFolderBinding>(FragmentFolderBinding::inflate) {
 
     private lateinit var adapter: PhotosAdapter
     private val viewModel by viewModels<PhotosFragmentViewModel>()
     private var query: String? = null
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val arg = arguments
+        query = arg?.getString("query")
 
         initUi()
 
         viewModel.state.collect(this::renderPhotos) { it.photos }
-
     }
 
     private fun renderPhotos(photos: PagingData<Photos>?) {
@@ -52,24 +52,10 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(FragmentPhotosBinding
             )
         }
 
-        arguments?.let {
-            query = it.getString(arg_query)
-        }
-
         viewModel.searchPhotos(query!!)
     }
 
     private fun onClick(photos: Photos) {
-        findNavController().navigate(MainFragmentDirections.actionMainFragmentToPhotoFragment(photos))
-    }
-
-    companion object {
-        @JvmStatic
-        fun sendData(query: String) =
-            PhotosFragment().apply {
-                arguments = Bundle().apply {
-                    putString(arg_query, query)
-                }
-            }
+        Toast.makeText(requireContext(), photos.createdAt, Toast.LENGTH_SHORT).show()
     }
 }

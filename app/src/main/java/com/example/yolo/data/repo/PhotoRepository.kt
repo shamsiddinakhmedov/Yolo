@@ -17,5 +17,5 @@ class PhotoRepository @Inject constructor(private val photoApi: PhotoApi) {
         pagingSourceFactory = {
             PhotoPagingSource(photoApi, query)
         }
-    ).liveData
+    ).flow
 }

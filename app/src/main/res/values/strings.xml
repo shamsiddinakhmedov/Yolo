@@ -17,4 +17,13 @@
     <string name="fragment_main_retry">Retry</string>
     <string name="fragment_main_result_could_not_be_loaded">Result could not be loaded</string>
     <string name="fragment_main_no_result_found_for_this_query">No result found for this query</string>
+    <string name="ic_share">share</string>
+    <string name="ic_info">info</string>
+    <string name="fragment_photo_full_image">full_image</string>
+    <string name="photo_fragment_download">icon download</string>
+    <string name="photo_fragment_folder">icon folder</string>
+    <string name="photo_fragment_change">icon change</string>
+    <string name="photo_fragment_like_empty">icon like_empty</string>
+    <string name="photo_fragment_like_filled">icon like_filled</string>
+    <string name="ic_back">icon back</string>
 </resources>

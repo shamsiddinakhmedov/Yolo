@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -72,5 +73,6 @@ dependencies {
     def paging_version = "3.1.1"
     implementation "androidx.paging:paging-runtime:$paging_version"
 
+    implementation 'jp.wasabeef:blurry:4.0.1'
 
 }
