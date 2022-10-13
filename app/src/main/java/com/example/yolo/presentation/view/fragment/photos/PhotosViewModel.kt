@@ -6,13 +6,13 @@ import androidx.paging.cachedIn
 import com.example.yolo.data.repo.PhotoRepository
 import com.example.yolo.domain.model.unsplash.Photos
 import com.example.yolo.presentation.architecture.BaseViewModel
-import com.example.yolo.presentation.view.fragment.photos.PhotosFragmentViewModel.*
+import com.example.yolo.presentation.view.fragment.photos.PhotosViewModel.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import javax.inject.Inject
 
 @HiltViewModel
-class PhotosFragmentViewModel @Inject constructor(
+class PhotosViewModel @Inject constructor(
     private val repository: PhotoRepository
 ) : BaseViewModel<State, Input, Effect>() {
 

@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/unsplashFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.example.yolo.presentation.view.fragment.main.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main">
+        android:id="@+id/unsplashFragment"
+        android:name="com.example.yolo.presentation.view.fragment.unsplash_main.UnsplashFragment"
+        android:label="fragment_unsplash"
+        tools:layout="@layout/fragment_unsplash">
         <action
-            android:id="@+id/action_mainFragment_to_photoFragment"
-            app:destination="@id/photoFragment" />
+            android:id="@+id/to_photoFragment"
+            app:destination="@id/photoDetailsFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/photosFragment"
         android:name="com.example.yolo.presentation.view.fragment.photos.PhotosFragment"
-        android:label="fragment_images"
+        android:label="fragment_photos"
         tools:layout="@layout/fragment_photos" />
 
 
@@ -35,10 +35,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/photoFragment"
-        android:name="com.example.yolo.presentation.view.fragment.photo.PhotoFragment"
-        android:label="PhotoFragment"
-        tools:layout="@layout/fragment_photo">
+        android:id="@+id/photoDetailsFragment"
+        android:name="com.example.yolo.presentation.view.fragment.photo_details.PhotoDetailsFragment"
+        android:label="PhotoDetailsFragment"
+        tools:layout="@layout/fragment_photo_details">
 
         <argument
             android:name="photo"
@@ -46,5 +46,4 @@
             app:argType="com.example.yolo.domain.model.unsplash.Photos"
             app:nullable="true" />
     </fragment>
-
 </navigation>

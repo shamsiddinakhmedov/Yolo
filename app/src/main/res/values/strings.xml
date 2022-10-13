@@ -26,4 +26,8 @@
     <string name="photo_fragment_like_empty">icon like_empty</string>
     <string name="photo_fragment_like_filled">icon like_filled</string>
     <string name="ic_back">icon back</string>
+    <string name="website">Website: </string>
+    <string name="author">Author: </string>
+    <string name="createdAt">Created at: </string>
+    <string name="size">Size: </string>
 </resources>

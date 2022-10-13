@@ -5,6 +5,7 @@ import com.example.yolo.domain.model.NavigationItemModel
 
 object Constants {
 
+    const val unsplash = "https://unsplash.com/photos/"
     const val BASE_URL = "https://api.unsplash.com/"
     const val KEY = "6KE142nYWjJEYDOWRkx6_FZTy-Imp1WgOTeGJ1OsBJI"
 

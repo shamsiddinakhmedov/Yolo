@@ -11,14 +11,14 @@ import com.example.yolo.domain.model.unsplash.Photos
 import com.example.yolo.presentation.architecture.BaseFragment
 import com.example.yolo.presentation.view.fragment.photos.PhotoLoadStateAdapter
 import com.example.yolo.presentation.view.fragment.photos.PhotosAdapter
-import com.example.yolo.presentation.view.fragment.photos.PhotosFragmentViewModel
+import com.example.yolo.presentation.view.fragment.photos.PhotosViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FolderFragment : BaseFragment<FragmentFolderBinding>(FragmentFolderBinding::inflate) {
 
     private lateinit var adapter: PhotosAdapter
-    private val viewModel by viewModels<PhotosFragmentViewModel>()
+    private val viewModel by viewModels<PhotosViewModel>()
     private var query: String? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

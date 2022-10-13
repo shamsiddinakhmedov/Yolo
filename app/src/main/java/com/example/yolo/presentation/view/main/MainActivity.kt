@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                 searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
                         if (query != null) {
-                            Navigation.findNavController(this@MainActivity, R.id.mainFragment)
+                            Navigation.findNavController(this@MainActivity, R.id.unsplashFragment)
                                 .navigate(R.id.folderFragment)
                         }
                         return true

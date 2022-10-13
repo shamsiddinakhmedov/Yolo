@@ -9,7 +9,7 @@ import androidx.paging.PagingData
 import com.example.yolo.databinding.FragmentPhotosBinding
 import com.example.yolo.domain.model.unsplash.Photos
 import com.example.yolo.presentation.architecture.BaseFragment
-import com.example.yolo.presentation.view.fragment.main.MainFragmentDirections
+import com.example.yolo.presentation.view.fragment.unsplash_main.UnsplashFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val arg_query = "query"
@@ -18,7 +18,7 @@ private const val arg_query = "query"
 class PhotosFragment : BaseFragment<FragmentPhotosBinding>(FragmentPhotosBinding::inflate) {
 
     private lateinit var adapter: PhotosAdapter
-    private val viewModel by viewModels<PhotosFragmentViewModel>()
+    private val viewModel by viewModels<PhotosViewModel>()
     private var query: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,7 +27,6 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(FragmentPhotosBinding
         initUi()
 
         viewModel.state.collect(this::renderPhotos) { it.photos }
-
     }
 
     private fun renderPhotos(photos: PagingData<Photos>?) {
@@ -60,7 +59,7 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(FragmentPhotosBinding
     }
 
     private fun onClick(photos: Photos) {
-        findNavController().navigate(MainFragmentDirections.actionMainFragmentToPhotoFragment(photos))
+        findNavController().navigate(UnsplashFragmentDirections.toPhotoFragment(photos))
     }
 
     companion object {

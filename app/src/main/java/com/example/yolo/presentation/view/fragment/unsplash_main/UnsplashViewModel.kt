@@ -1,12 +1,12 @@
-package com.example.yolo.presentation.view.fragment.main
+package com.example.yolo.presentation.view.fragment.unsplash_main
 
 import com.example.yolo.presentation.architecture.BaseViewModel
-import com.example.yolo.presentation.view.fragment.main.MainFragmentViewModel.*
+import com.example.yolo.presentation.view.fragment.unsplash_main.UnsplashViewModel.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainFragmentViewModel @Inject constructor() : BaseViewModel<State, Input, Effect>() {
+class UnsplashViewModel @Inject constructor() : BaseViewModel<State, Input, Effect>() {
 
     class State
     class Input

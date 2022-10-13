@@ -1,9 +1,9 @@
-package com.example.yolo.presentation.view.fragment.main
+package com.example.yolo.presentation.view.fragment.unsplash_main
 
 import android.os.Bundle
 import android.view.View
 import com.example.yolo.app.common.Constants.itemsTabLayout
-import com.example.yolo.databinding.FragmentMainBinding
+import com.example.yolo.databinding.FragmentUnsplashBinding
 import com.example.yolo.presentation.architecture.BaseFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::inflate) {
+class UnsplashFragment : BaseFragment<FragmentUnsplashBinding>(FragmentUnsplashBinding::inflate) {
 
     private lateinit var viewPagerAdapter: ViewPagerAdapter
 

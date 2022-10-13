@@ -1,4 +1,4 @@
-package com.example.yolo.presentation.view.fragment.main
+package com.example.yolo.presentation.view.fragment.unsplash_main
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
