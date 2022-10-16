@@ -26,8 +26,14 @@
     <string name="photo_fragment_like_empty">icon like_empty</string>
     <string name="photo_fragment_like_filled">icon like_filled</string>
     <string name="ic_back">icon back</string>
+    <string name="ic_cancel">icon cancel</string>
+    <string name="ic_check">icon check</string>
     <string name="website">Website: </string>
     <string name="author">Author: </string>
-    <string name="createdAt">Created at: </string>
-    <string name="size">Size: </string>
+    <string name="saved">Saved </string>
+    <string name="lock_screen">Set as Lock screen</string>
+    <string name="home_screen">Set as Home screen</string>
+    <string name="both_screen">Set both</string>
+    <string name="failed">Failed to load wallpapers</string>
+    <string name="noInternet">No internet connection</string>
 </resources>

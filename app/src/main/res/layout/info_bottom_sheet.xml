@@ -5,9 +5,8 @@
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bottom_sheet_bg"
     android:padding="24dp"
-    tools:backgroundTint="@color/grey">
+    android:background="@color/theme">
 
     <TextView
         android:id="@+id/link"
@@ -15,14 +14,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:autoLink="web"
+        android:textColorLink="@color/white"
         android:ellipsize="end"
-        android:inputType=""
         android:maxLines="1"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="app_name" />
+        tools:text="app_ndadeadeadddwadwdwadadawdwadadame" />
 
     <TextView
         android:id="@+id/author"
@@ -30,30 +29,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/link"
         tools:text="app_name" />
 
     <TextView
-        android:id="@+id/size"
+        android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/author"
         tools:text="app_name" />
 
-    <TextView
-        android:id="@+id/createdAt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/size"
-        tools:text="app_name" />
 </androidx.constraintlayout.widget.ConstraintLayout>

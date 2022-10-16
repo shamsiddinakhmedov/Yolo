@@ -21,7 +21,7 @@ class PhotosAdapter(val onClick: (Photos) -> Unit) :
                 .load(photos.urls.small)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .error(R.drawable.error)
+                .error(R.drawable.ic_error)
                 .into(image)
 
             root.setOnClickListener {

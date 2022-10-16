@@ -1,12 +1,15 @@
-package com.example.yolo.presentation.view.fragment.folder
+package com.example.yolo.presentation.view.fragment.search
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
-import com.example.yolo.databinding.FragmentFolderBinding
+import com.example.yolo.databinding.FragmentSearchBinding
 import com.example.yolo.domain.model.unsplash.Photos
 import com.example.yolo.presentation.architecture.BaseFragment
 import com.example.yolo.presentation.view.fragment.photos.PhotoLoadStateAdapter
@@ -15,15 +18,28 @@ import com.example.yolo.presentation.view.fragment.photos.PhotosViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FolderFragment : BaseFragment<FragmentFolderBinding>(FragmentFolderBinding::inflate) {
+class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
 
     private lateinit var adapter: PhotosAdapter
     private val viewModel by viewModels<PhotosViewModel>()
-    private var query: String? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val arg = arguments
-        query = arg?.getString("query")
+
+        val searchView = SearchView(requireContext())
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    Toast.makeText(requireContext(), query, Toast.LENGTH_SHORT).show()
+//                    viewModel.searchPhotos(query)
+//                    searchView.clearFocus()
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean = false
+        })
+        viewModel.searchPhotos("book")
 
         initUi()
 
@@ -51,11 +67,9 @@ class FolderFragment : BaseFragment<FragmentFolderBinding>(FragmentFolderBinding
                 footer = PhotoLoadStateAdapter { adapter.retry() }
             )
         }
-
-        viewModel.searchPhotos(query!!)
     }
 
     private fun onClick(photos: Photos) {
-        Toast.makeText(requireContext(), photos.createdAt, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), photos.description, Toast.LENGTH_SHORT).show()
     }
 }

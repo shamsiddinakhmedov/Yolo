@@ -8,16 +8,14 @@ import kotlinx.parcelize.Parcelize
 data class Photos(
     @SerializedName("id")
     val id: String,
-    @SerializedName("created_at")
-    val createdAt: String,
-    @SerializedName("width")
-    val width: Int,
-    @SerializedName("height")
-    val height: Int,
+    @SerializedName("description")
+    val description: String?,
     @SerializedName("color")
     val color: String,
     @SerializedName("urls")
     val urls: Urls,
     @SerializedName("user")
-    val user: User
+    val user: User,
+    @SerializedName("links")
+    val links: Links
 ) : Parcelable

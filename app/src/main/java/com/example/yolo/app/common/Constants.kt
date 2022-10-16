@@ -5,9 +5,9 @@ import com.example.yolo.domain.model.NavigationItemModel
 
 object Constants {
 
-    const val unsplash = "https://unsplash.com/photos/"
+    const val unsplash = "https://unsplash.com/"
     const val BASE_URL = "https://api.unsplash.com/"
-    const val KEY = "6KE142nYWjJEYDOWRkx6_FZTy-Imp1WgOTeGJ1OsBJI"
+    const val KEY = "prMrqL_0Ba9E53tjEgfYOxSSWlS9AZasI-n7W0iY46o"
 
     val itemsNavigation = arrayListOf(
         NavigationItemModel(R.drawable.home, "Home"),

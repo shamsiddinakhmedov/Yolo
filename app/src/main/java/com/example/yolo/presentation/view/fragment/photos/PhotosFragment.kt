@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
+import com.example.yolo.app.common.Constants
 import com.example.yolo.databinding.FragmentPhotosBinding
 import com.example.yolo.domain.model.unsplash.Photos
 import com.example.yolo.presentation.architecture.BaseFragment
@@ -19,7 +20,7 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(FragmentPhotosBinding
 
     private lateinit var adapter: PhotosAdapter
     private val viewModel by viewModels<PhotosViewModel>()
-    private var query: String? = null
+    private var query: String = Constants.itemsTabLayout[1]
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,11 +52,15 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(FragmentPhotosBinding
             )
         }
 
-        arguments?.let {
-            query = it.getString(arg_query)
+        arguments.let {
+            query = if (it != null) {
+                it.getString(arg_query)!!
+            }else {
+                Constants.itemsTabLayout[1]
+            }
         }
 
-        viewModel.searchPhotos(query!!)
+        viewModel.searchPhotos(query)
     }
 
     private fun onClick(photos: Photos) {

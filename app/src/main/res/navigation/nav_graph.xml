@@ -12,7 +12,14 @@
         tools:layout="@layout/fragment_unsplash">
         <action
             android:id="@+id/to_photoFragment"
-            app:destination="@id/photoDetailsFragment" />
+            app:destination="@id/photoDetailsFragment"
+            app:enterAnim="@anim/slide_in_enter"
+            app:exitAnim="@anim/slide_out_exit"
+            app:popEnterAnim="@anim/slide_in_pop_enter"
+            app:popExitAnim="@anim/slide_out_pop_exit" />
+        <action
+            android:id="@+id/to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
 
     <fragment
@@ -21,18 +28,11 @@
         android:label="fragment_photos"
         tools:layout="@layout/fragment_photos" />
 
-
     <fragment
-        android:id="@+id/folderFragment"
-        android:name="com.example.yolo.presentation.view.fragment.folder.FolderFragment"
-        android:label="FolderFragment"
-        tools:layout="@layout/fragment_folder">
-        <argument
-            android:name="query"
-            android:defaultValue="@null"
-            app:argType="string"
-            app:nullable="true" />
-    </fragment>
+        android:id="@+id/searchFragment"
+        android:name="com.example.yolo.presentation.view.fragment.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/photoDetailsFragment"

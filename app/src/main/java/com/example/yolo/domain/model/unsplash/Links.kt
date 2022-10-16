@@ -5,11 +5,9 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Urls(
-    @SerializedName("full")
-    val full: String,
-    @SerializedName("regular")
-    val regular: String,
-    @SerializedName("small")
-    val small: String
+data class Links(
+    @SerializedName("download")
+    val download: String,
+    @SerializedName("download_location")
+    val download_location: String
 ) : Parcelable

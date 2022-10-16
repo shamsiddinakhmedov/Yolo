@@ -8,16 +8,13 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor() : BaseViewModel<State, Input, Effect>() {
 
-    class State
+    class State()
 
-    sealed class Input {
-    }
+    class Input
 
     sealed class Effect
 
-    override fun getInitialState(): State {
-        return State()
-    }
+    override fun getInitialState(): State = State()
 
     override fun processInput(input: Input) {
     }
