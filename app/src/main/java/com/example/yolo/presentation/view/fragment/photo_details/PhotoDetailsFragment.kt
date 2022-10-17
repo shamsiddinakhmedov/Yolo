@@ -11,8 +11,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.view.*
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -39,71 +38,69 @@ class PhotoDetailsFragment :
     private val args by navArgs<PhotoDetailsFragmentArgs>()
     private lateinit var photo: Photos
     private lateinit var wallpaperManager: WallpaperManager
-    lateinit var menuHost: MenuHost
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         wallpaperManager = WallpaperManager.getInstance(context)
-
+        setHasOptionsMenu(true)
         photo = args.photo!!
 
         initUi()
-
-        setMenu()
     }
 
-    private fun setMenu() {
-        menuHost = requireActivity()
-        menuHost.addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.photo_fragment_menu, menu)
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+        val search = menu.findItem(R.id.search)
+        val info = menu.findItem(R.id.info)
+        val share = menu.findItem(R.id.share)
+        search.isVisible = false
+        info.isVisible = true
+        share.isVisible = true
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.info -> {
+                infoPhoto()
+                true
             }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return true
+            R.id.share -> {
+                shareUrl()
+                true
             }
-
-            override fun onPrepareMenu(menu: Menu) {
-                super.onPrepareMenu(menu)
-                menu.clear()
-                val menuInflater = activity?.menuInflater
-                menuInflater?.inflate(R.menu.photo_fragment_menu, menu)
-            }
-
-
-        })
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun initUi() = with(binding) {
 
-        uploadPhoto()
+        setPhoto()
 
         binding.apply {
-//            back.setOnClickListener {
-//                findNavController().popBackStack()
-//            }
-//            share.setOnClickListener {
-//                shareUrl()
-//            }
-//
-//            info.setOnClickListener {
-//                infoPhoto()
-//            }
-
             download.setOnClickListener {
                 downloadPhoto()
             }
             wallpaper.setOnClickListener {
                 setWallpaper()
             }
-
+            change.setOnClickListener {
+                toChangePhoto()
+            }
         }
-
     }
 
-    private fun uploadPhoto() = with(binding) {
-        Glide.with(root).load(photo.urls.small)
+    private fun setPhoto() {
+        uploadPhoto(photo.urls.small)
+        uploadPhoto(photo.urls.full)
+    }
+
+    private fun uploadPhoto(url: String) = with(binding) {
+        Glide.with(root).load(url)
             .listener(object : RequestListener<Drawable> {
+
                 override fun onLoadFailed(
                     e: GlideException?,
                     model: Any?,
@@ -129,12 +126,11 @@ class PhotoDetailsFragment :
             .into(fullPhoto)
     }
 
-
     private fun shareUrl() {
         val intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(
-                Intent.EXTRA_TEXT, "${Constants.unsplash}/photos/${photo.id}"
+                Intent.EXTRA_TEXT, "${Constants.unsplash}photos/${photo.id}"
             )
             type = "text/plain"
         }
@@ -182,6 +178,7 @@ class PhotoDetailsFragment :
                 Environment.DIRECTORY_PICTURES,
                 File.separator + getString(R.string.app_name) + File.separator.toString() + filename
             )
+
         snackBar(R.string.saved)
         dm.enqueue(request)
     }
@@ -285,5 +282,9 @@ class PhotoDetailsFragment :
             dialog.setContentView(view.root)
             dialog.show()
         }
+    }
+
+    private fun toChangePhoto() {
+        findNavController().navigate(PhotoDetailsFragmentDirections.toChangePhotoFragment(photo))
     }
 }

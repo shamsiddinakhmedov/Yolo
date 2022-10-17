@@ -32,13 +32,35 @@
         android:id="@+id/searchFragment"
         android:name="com.example.yolo.presentation.view.fragment.search.SearchFragment"
         android:label="SearchFragment"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+        <argument
+            android:name="query"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/photoDetailsFragment"
         android:name="com.example.yolo.presentation.view.fragment.photo_details.PhotoDetailsFragment"
         android:label="PhotoDetailsFragment"
         tools:layout="@layout/fragment_photo_details">
+
+        <argument
+            android:name="photo"
+            android:defaultValue="@null"
+            app:argType="com.example.yolo.domain.model.unsplash.Photos"
+            app:nullable="true" />
+        <action
+            android:id="@+id/to_changePhotoFragment"
+            app:destination="@id/changePhotoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/changePhotoFragment"
+        android:name="com.example.yolo.presentation.view.fragment.changePhoto.ChangePhotoFragment"
+        android:label="ChangePhotoFragment"
+        tools:layout="@layout/fragment_change_photo">
 
         <argument
             android:name="photo"

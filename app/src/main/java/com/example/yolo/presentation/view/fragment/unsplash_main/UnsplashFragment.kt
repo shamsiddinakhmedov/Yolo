@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.navigation.fragment.findNavController
@@ -24,11 +25,34 @@ class UnsplashFragment : BaseFragment<FragmentUnsplashBinding>(FragmentUnsplashB
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
 
         initUi()
 
-        setMenu()
+    }
 
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+        val info = menu.findItem(R.id.info)
+        val share = menu.findItem(R.id.share)
+        val search = menu.findItem(R.id.search)
+
+        search.isVisible = true
+        info.isVisible = false
+        share.isVisible = false
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.search -> {
+                findNavController().navigate(UnsplashFragmentDirections.toSearchFragment())
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun initUi() = with(binding) {
@@ -44,22 +68,25 @@ class UnsplashFragment : BaseFragment<FragmentUnsplashBinding>(FragmentUnsplashB
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu, menu)
+                val info = menu.findItem(R.id.info)
+                val share = menu.findItem(R.id.share)
+                val search = menu.findItem(R.id.search)
+
+                search.isVisible = true
+                info.isVisible = false
+                share.isVisible = false
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                val id = menuItem.itemId
-                if (id == R.id.search) {
-                    findNavController().navigate(UnsplashFragmentDirections.toSearchFragment())
-                }
-                menuItem.isVisible = false
-                return true
-            }
 
-            override fun onPrepareMenu(menu: Menu) {
-                super.onPrepareMenu(menu)
-                menu.clear()
-                val menuInflater = activity?.menuInflater
-                menuInflater?.inflate(R.menu.menu, menu)
+                return when (menuItem.itemId) {
+                    R.id.search -> {
+                        Toast.makeText(requireContext(), "Click in search", Toast.LENGTH_SHORT)
+                            .show()
+                        true
+                    }
+                    else -> true
+                }
             }
         })
     }
