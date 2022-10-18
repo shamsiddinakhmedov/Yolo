@@ -11,6 +11,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.view.*
+import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -22,6 +24,7 @@ import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.example.yolo.R
 import com.example.yolo.app.common.Constants
+import com.example.yolo.data.repo.YoloRepository
 import com.example.yolo.databinding.FragmentPhotoDetailsBinding
 import com.example.yolo.databinding.InfoBottomSheetBinding
 import com.example.yolo.databinding.WallpaperBottomSheetBinding
@@ -29,22 +32,24 @@ import com.example.yolo.domain.model.unsplash.Photos
 import com.example.yolo.presentation.architecture.BaseFragment
 import com.example.yolo.presentation.view.utils.snackBar
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.IOException
 
+@AndroidEntryPoint
 class PhotoDetailsFragment :
     BaseFragment<FragmentPhotoDetailsBinding>(FragmentPhotoDetailsBinding::inflate) {
 
     private val args by navArgs<PhotoDetailsFragmentArgs>()
     private lateinit var photo: Photos
     private lateinit var wallpaperManager: WallpaperManager
+    private val viewModel by viewModels<PhotoDetailsViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         wallpaperManager = WallpaperManager.getInstance(context)
         setHasOptionsMenu(true)
         photo = args.photo!!
-
         initUi()
     }
 
@@ -76,7 +81,6 @@ class PhotoDetailsFragment :
     }
 
     private fun initUi() = with(binding) {
-
         setPhoto()
 
         binding.apply {
@@ -89,8 +93,17 @@ class PhotoDetailsFragment :
             change.setOnClickListener {
                 toChangePhoto()
             }
+            like.setOnClickListener {
+
+            }
         }
     }
+
+//    private suspend fun putLike() {
+//        viewModel.insertPhoto(photo)
+//
+//        Toast.makeText(requireContext(), "$liked", Toast.LENGTH_SHORT).show()
+//    }
 
     private fun setPhoto() {
         uploadPhoto(photo.urls.small)
@@ -208,12 +221,7 @@ class PhotoDetailsFragment :
                             }
                         }
 
-                        override fun onLoadCleared(placeholder: Drawable?) {
-                            // this is called when imageView is cleared on lifecycle call or for
-                            // some other reason.
-                            // if you are referencing the bitmap somewhere else too other than this imageView
-                            // clear it here as you can no longer have the bitmap
-                        }
+                        override fun onLoadCleared(placeholder: Drawable?) {}
                     })
             }
 
@@ -239,12 +247,7 @@ class PhotoDetailsFragment :
                             }
                         }
 
-                        override fun onLoadCleared(placeholder: Drawable?) {
-                            // this is called when imageView is cleared on lifecycle call or for
-                            // some other reason.
-                            // if you are referencing the bitmap somewhere else too other than this imageView
-                            // clear it here as you can no longer have the bitmap
-                        }
+                        override fun onLoadCleared(placeholder: Drawable?) {}
                     })
             }
 
@@ -271,12 +274,7 @@ class PhotoDetailsFragment :
                             }
                         }
 
-                        override fun onLoadCleared(placeholder: Drawable?) {
-                            // this is called when imageView is cleared on lifecycle call or for
-                            // some other reason.
-                            // if you are referencing the bitmap somewhere else too other than this imageView
-                            // clear it here as you can no longer have the bitmap
-                        }
+                        override fun onLoadCleared(placeholder: Drawable?) {}
                     })
             }
             dialog.setContentView(view.root)

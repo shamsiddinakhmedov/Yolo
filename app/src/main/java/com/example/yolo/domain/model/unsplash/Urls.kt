@@ -7,9 +7,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Urls(
     @SerializedName("full")
-    val full: String,
+    var full: String,
     @SerializedName("regular")
-    val regular: String,
+    var regular: String,
     @SerializedName("small")
-    val small: String
+    var small: String
 ) : Parcelable

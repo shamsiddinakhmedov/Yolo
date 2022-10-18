@@ -13,4 +13,12 @@ interface PhotoApi {
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
     ): PhotoResponse
+
+    @GET("search/photos")
+    suspend fun getPopularImage(
+        @Query("query") query: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+        @Query("order_by") orderBy: String
+    ): PhotoResponse
 }

@@ -5,7 +5,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.yolo.R
@@ -13,7 +12,6 @@ import com.example.yolo.app.common.Constants.itemsNavigation
 import com.example.yolo.app.observeNetworkState.ConnectivityObserver
 import com.example.yolo.app.observeNetworkState.NetworkConnectivityObserver
 import com.example.yolo.databinding.ActivityMainBinding
-import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -25,7 +23,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var connectivityObserver: ConnectivityObserver
 
-    var drawerLayout: DrawerLayout? = null
     private var actionBarDrawerToggle: ActionBarDrawerToggle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,13 +38,11 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun setNavigationView() {
-        val navigationView = findViewById<NavigationView>(R.id.nav_view)
-        navigationView.itemIconTintList = null
-        drawerLayout = findViewById(R.id.my_drawer_layout)
+        binding.navView.itemIconTintList = null
         actionBarDrawerToggle =
             ActionBarDrawerToggle(
                 this,
-                drawerLayout,
+                binding.myDrawerLayout,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close
             )
@@ -57,10 +52,12 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        navigationView.setNavigationItemSelectedListener { menuItem ->
+        binding.navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.home -> {
                     title = itemsNavigation[0].title
+                    binding.navHostFragment.findNavController().navigate(R.id.unsplashFragment)
+                    supportFragmentManager.clearBackStack("click")
                     binding.myDrawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
@@ -93,6 +90,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    override fun onBackPressed() {
+//        val fragment = supportFragmentManager.backStackEntryCount
+
+        if (binding.navHostFragment.findNavController().currentDestination?.id == R.id.unsplashFragment) {
+            finish()
+        }
+//
+//        if (fragment == R.id.unsplashFragment) {
+//            finish()
+//        }
+        super.onBackPressed()
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle!!.onOptionsItemSelected(item)) {

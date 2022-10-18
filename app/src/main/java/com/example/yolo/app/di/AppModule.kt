@@ -1,7 +1,10 @@
 package com.example.yolo.app.di
 
+import android.app.Application
 import com.example.yolo.app.common.Constants
 import com.example.yolo.data.api.PhotoApi
+import com.example.yolo.data.database.PhotoDatabase
+import com.example.yolo.data.database.YoloDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,4 +27,16 @@ object AppModule {
     @Provides
     @Singleton
     fun provideImageApi(retrofit: Retrofit): PhotoApi = retrofit.create(PhotoApi::class.java)
+
+    @Singleton
+    @Provides
+    fun getAppDb(context: Application): PhotoDatabase {
+        return PhotoDatabase.getInstance(context)
+    }
+
+    @Singleton
+    @Provides
+    fun getAppDao(photoDatabase: PhotoDatabase): YoloDao {
+        return photoDatabase.yoloDao()
+    }
 }

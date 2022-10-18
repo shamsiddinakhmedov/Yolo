@@ -1,17 +1,23 @@
 package com.example.yolo.presentation.view.fragment.photo_details
 
+import com.example.yolo.data.repo.YoloRepository
 import com.example.yolo.domain.model.unsplash.Photos
 import com.example.yolo.presentation.architecture.BaseViewModel
 import com.example.yolo.presentation.view.fragment.photo_details.PhotoDetailsViewModel.*
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class PhotoDetailsViewModel : BaseViewModel<State, Input, Effect>() {
+@HiltViewModel
+class PhotoDetailsViewModel @Inject constructor(
+    private val yoloRepository: YoloRepository
+) : BaseViewModel<State, Input, Effect>() {
 
     data class State(
         val photo: Photos? = null
     )
 
     sealed class Input {
-        data class SetPhoto(val photos: Photos): Input()
+        data class SetPhoto(val photos: Photos) : Input()
     }
 
     class Effect
@@ -21,7 +27,7 @@ class PhotoDetailsViewModel : BaseViewModel<State, Input, Effect>() {
     override fun processInput(input: Input) {
     }
 
-    private fun getPhoto() {
-
+    suspend fun insertPhoto(photos: Photos) {
+        yoloRepository.insertPhoto(photos)
     }
 }

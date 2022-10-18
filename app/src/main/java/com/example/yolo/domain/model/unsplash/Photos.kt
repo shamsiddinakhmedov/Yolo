@@ -1,21 +1,22 @@
 package com.example.yolo.domain.model.unsplash
 
 import android.os.Parcelable
+import androidx.room.Embedded
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Photos(
-    @SerializedName("id")
-    val id: String,
+    @SerializedName("photoId")
+    var id: String,
     @SerializedName("description")
-    val description: String?,
+    var description: String?,
     @SerializedName("color")
-    val color: String,
+    var color: String,
     @SerializedName("urls")
-    val urls: Urls,
+    var urls: Urls,
     @SerializedName("user")
-    val user: User,
+    var user: User,
     @SerializedName("links")
-    val links: Links
+    var links: Links
 ) : Parcelable

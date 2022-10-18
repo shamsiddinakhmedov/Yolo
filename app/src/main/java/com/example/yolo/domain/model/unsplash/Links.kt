@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Links(
     @SerializedName("download")
-    val download: String,
+    var download: String,
     @SerializedName("download_location")
-    val download_location: String
+    var download_location: String
 ) : Parcelable
