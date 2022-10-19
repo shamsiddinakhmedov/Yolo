@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var connectivityObserver: ConnectivityObserver
-
     private var actionBarDrawerToggle: ActionBarDrawerToggle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,15 +91,10 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-//        val fragment = supportFragmentManager.backStackEntryCount
 
         if (binding.navHostFragment.findNavController().currentDestination?.id == R.id.unsplashFragment) {
             finish()
         }
-//
-//        if (fragment == R.id.unsplashFragment) {
-//            finish()
-//        }
         super.onBackPressed()
     }
 

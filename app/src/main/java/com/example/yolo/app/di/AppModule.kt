@@ -1,13 +1,13 @@
 package com.example.yolo.app.di
 
-import android.app.Application
+import android.content.Context
 import com.example.yolo.app.common.Constants
 import com.example.yolo.data.api.PhotoApi
-import com.example.yolo.data.database.PhotoDatabase
-import com.example.yolo.data.database.YoloDao
+import com.example.yolo.data.database.LikedPhotoDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -30,13 +30,10 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun getAppDb(context: Application): PhotoDatabase {
-        return PhotoDatabase.getInstance(context)
-    }
+    fun provideLikedPhotoDatabase(@ApplicationContext context: Context) =
+        LikedPhotoDatabase.getLikePhotoDb(context)
 
     @Singleton
     @Provides
-    fun getAppDao(photoDatabase: PhotoDatabase): YoloDao {
-        return photoDatabase.yoloDao()
-    }
+    fun provideLikedPhotoDao(likedDb: LikedPhotoDatabase) = likedDb.likePhotoDao()
 }

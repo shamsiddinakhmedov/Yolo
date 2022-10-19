@@ -11,7 +11,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -24,12 +23,13 @@ import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.example.yolo.R
 import com.example.yolo.app.common.Constants
-import com.example.yolo.data.repo.YoloRepository
 import com.example.yolo.databinding.FragmentPhotoDetailsBinding
 import com.example.yolo.databinding.InfoBottomSheetBinding
 import com.example.yolo.databinding.WallpaperBottomSheetBinding
 import com.example.yolo.domain.model.unsplash.Photos
 import com.example.yolo.presentation.architecture.BaseFragment
+import com.example.yolo.presentation.view.fragment.photo_details.PhotoDetailsViewModel.Input.SetLikedPhoto
+import com.example.yolo.presentation.view.fragment.photo_details.PhotoDetailsViewModel.Input.SetPhoto
 import com.example.yolo.presentation.view.utils.snackBar
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,39 +49,15 @@ class PhotoDetailsFragment :
         super.onViewCreated(view, savedInstanceState)
         wallpaperManager = WallpaperManager.getInstance(context)
         setHasOptionsMenu(true)
+
         photo = args.photo!!
+
         initUi()
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu, menu)
-        val search = menu.findItem(R.id.search)
-        val info = menu.findItem(R.id.info)
-        val share = menu.findItem(R.id.share)
-        search.isVisible = false
-        info.isVisible = true
-        share.isVisible = true
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.info -> {
-                infoPhoto()
-                true
-            }
-            R.id.share -> {
-                shareUrl()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
+        viewModel.processInput(SetPhoto(photo))
+        viewModel.state.collect(this::renderPhoto) { it.photo }
     }
 
     private fun initUi() = with(binding) {
-        setPhoto()
 
         binding.apply {
             download.setOnClickListener {
@@ -94,20 +70,22 @@ class PhotoDetailsFragment :
                 toChangePhoto()
             }
             like.setOnClickListener {
-
+                putLike()
             }
         }
     }
 
-//    private suspend fun putLike() {
-//        viewModel.insertPhoto(photo)
-//
-//        Toast.makeText(requireContext(), "$liked", Toast.LENGTH_SHORT).show()
-//    }
+    private fun putLike() {
+        viewModel.processInput(SetLikedPhoto)
+    }
 
-    private fun setPhoto() {
-        uploadPhoto(photo.urls.small)
-        uploadPhoto(photo.urls.full)
+    private fun renderPhoto(photo: Photos?) = with(binding) {
+        if (photo?.liked == true) {
+            like.setBackgroundResource(R.drawable.ic_like_filled)
+        } else {
+            like.setBackgroundResource(R.drawable.ic_like_empty)
+        }
+        uploadPhoto(photo!!.urls.small)
     }
 
     private fun uploadPhoto(url: String) = with(binding) {
@@ -284,5 +262,32 @@ class PhotoDetailsFragment :
 
     private fun toChangePhoto() {
         findNavController().navigate(PhotoDetailsFragmentDirections.toChangePhotoFragment(photo))
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+        val search = menu.findItem(R.id.search)
+        val info = menu.findItem(R.id.info)
+        val share = menu.findItem(R.id.share)
+        search.isVisible = false
+        info.isVisible = true
+        share.isVisible = true
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.info -> {
+                infoPhoto()
+                true
+            }
+            R.id.share -> {
+                shareUrl()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

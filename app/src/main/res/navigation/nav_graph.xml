@@ -45,12 +45,12 @@
         android:name="com.example.yolo.presentation.view.fragment.photo_details.PhotoDetailsFragment"
         android:label="PhotoDetailsFragment"
         tools:layout="@layout/fragment_photo_details">
-
         <argument
             android:name="photo"
             android:defaultValue="@null"
             app:argType="com.example.yolo.domain.model.unsplash.Photos"
             app:nullable="true" />
+
         <action
             android:id="@+id/to_changePhotoFragment"
             app:destination="@id/changePhotoFragment" />

@@ -20,53 +20,77 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageView
-            android:id="@+id/download"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:contentDescription="@string/photo_fragment_download"
-            android:focusable="true"
-            android:paddingVertical="16dp"
-            android:src="@drawable/ic_download" />
+            android:gravity="center"
+            android:padding="12dp">
 
-        <ImageView
-            android:id="@+id/wallpaper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:contentDescription="@string/photo_fragment_folder"
-            android:focusable="true"
-            android:paddingVertical="16dp"
-            android:src="@drawable/ic_folder" />
+            <ImageView
+                android:id="@+id/download"
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:contentDescription="@string/photo_fragment_download"
+                android:focusable="true"
+                android:src="@drawable/ic_download" />
+        </LinearLayout>
 
-        <ImageView
-            android:id="@+id/change"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:contentDescription="@string/photo_fragment_change"
-            android:focusable="true"
-            android:paddingVertical="16dp"
-            android:src="@drawable/ic_change" />
+            android:gravity="center"
+            android:padding="12dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/like"
+            <ImageView
+                android:id="@+id/wallpaper"
+                android:layout_width="24sp"
+                android:layout_height="24dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:contentDescription="@string/photo_fragment_download"
+                android:focusable="true"
+                android:src="@drawable/ic_folder" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:contentDescription="@string/photo_fragment_like_empty"
-            android:focusable="true"
-            android:paddingVertical="16dp"
-            android:src="@drawable/ic_like_empty" />
+            android:gravity="center"
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/change"
+                android:layout_width="24sp"
+                android:layout_height="24dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:contentDescription="@string/photo_fragment_download"
+                android:focusable="true"
+                android:src="@drawable/ic_change" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/like"
+                android:layout_width="24sp"
+                android:layout_height="24dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:contentDescription="@string/photo_fragment_download"
+                android:focusable="true"
+                tools:src="@drawable/ic_download" />
+        </LinearLayout>
     </LinearLayout>
 
     <Button
