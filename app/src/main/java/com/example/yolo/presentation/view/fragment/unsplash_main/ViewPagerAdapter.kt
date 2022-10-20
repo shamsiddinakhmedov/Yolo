@@ -9,10 +9,12 @@ import com.example.yolo.presentation.view.fragment.photos.PhotosFragment
 class ViewPagerAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
-    private val title: List<String>
+    private val title: List<String>,
+    private val popular: String
 ) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int = 5
 
-    override fun createFragment(position: Int): Fragment = PhotosFragment.sendData(title[position])
+    override fun createFragment(position: Int): Fragment =
+        PhotosFragment.sendData(title[position], popular)
 }

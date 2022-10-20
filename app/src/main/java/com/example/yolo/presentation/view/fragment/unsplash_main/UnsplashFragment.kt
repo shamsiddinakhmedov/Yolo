@@ -16,17 +16,18 @@ import com.example.yolo.presentation.architecture.BaseFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class UnsplashFragment : BaseFragment<FragmentUnsplashBinding>(FragmentUnsplashBinding::inflate) {
 
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     private lateinit var menuHost: MenuHost
+    private var popular: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
+        popular = arguments?.getString("popular")
         initUi()
 
     }
@@ -48,7 +49,7 @@ class UnsplashFragment : BaseFragment<FragmentUnsplashBinding>(FragmentUnsplashB
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.search -> {
-                findNavController().navigate(UnsplashFragmentDirections.toSearchFragment())
+                findNavController().navigate(R.id.searchFragment)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -56,7 +57,8 @@ class UnsplashFragment : BaseFragment<FragmentUnsplashBinding>(FragmentUnsplashB
     }
 
     private fun initUi() = with(binding) {
-        viewPagerAdapter = ViewPagerAdapter(childFragmentManager, lifecycle, itemsTabLayout)
+        viewPagerAdapter =
+            ViewPagerAdapter(childFragmentManager, lifecycle, itemsTabLayout, popular.toString())
         viewPager.adapter = viewPagerAdapter
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = itemsTabLayout[position]

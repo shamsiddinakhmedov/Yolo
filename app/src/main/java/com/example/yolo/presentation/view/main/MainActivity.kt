@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         observeNetworkChanges()
     }
 
-
     private fun setNavigationView() {
         binding.navView.itemIconTintList = null
         actionBarDrawerToggle =
@@ -56,13 +55,16 @@ class MainActivity : AppCompatActivity() {
                 R.id.home -> {
                     title = itemsNavigation[0].title
                     binding.navHostFragment.findNavController().navigate(R.id.unsplashFragment)
-                    supportFragmentManager.clearBackStack("click")
                     binding.myDrawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
                 R.id.popular -> {
                     title = itemsNavigation[1].title
                     binding.myDrawerLayout.closeDrawer(GravityCompat.START)
+                    val bundle = Bundle()
+                    bundle.putString("popular", "popular")
+                    binding.navHostFragment.findNavController()
+                        .navigate(R.id.unsplashFragment, bundle)
                     true
                 }
                 R.id.random -> {
@@ -88,7 +90,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 
     override fun onBackPressed() {
 
