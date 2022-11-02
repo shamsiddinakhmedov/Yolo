@@ -8,6 +8,9 @@ import androidx.core.view.GravityCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.yolo.R
+import com.example.yolo.app.common.Constants.LATEST
+import com.example.yolo.app.common.Constants.ORDER_BY
+import com.example.yolo.app.common.Constants.POPULAR
 import com.example.yolo.app.common.Constants.itemsNavigation
 import com.example.yolo.app.observeNetworkState.ConnectivityObserver
 import com.example.yolo.app.observeNetworkState.NetworkConnectivityObserver
@@ -53,16 +56,17 @@ class MainActivity : AppCompatActivity() {
         binding.navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.home -> {
-                    title = itemsNavigation[0].title
-                    binding.navHostFragment.findNavController().navigate(R.id.unsplashFragment)
                     binding.myDrawerLayout.closeDrawer(GravityCompat.START)
+                    val bundle = Bundle()
+                    bundle.putString(ORDER_BY, LATEST)
+                    binding.navHostFragment.findNavController()
+                        .navigate(R.id.unsplashFragment, bundle)
                     true
                 }
                 R.id.popular -> {
-                    title = itemsNavigation[1].title
                     binding.myDrawerLayout.closeDrawer(GravityCompat.START)
                     val bundle = Bundle()
-                    bundle.putString("popular", "popular")
+                    bundle.putString(ORDER_BY, POPULAR)
                     binding.navHostFragment.findNavController()
                         .navigate(R.id.unsplashFragment, bundle)
                     true
@@ -75,6 +79,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.like -> {
                     title = itemsNavigation[3].title
                     binding.myDrawerLayout.closeDrawer(GravityCompat.START)
+                    binding.navHostFragment.findNavController().navigate(R.id.likePhotosFragment)
                     true
                 }
                 R.id.history -> {
@@ -85,6 +90,7 @@ class MainActivity : AppCompatActivity() {
                 else -> {
                     title = itemsNavigation[5].title
                     binding.myDrawerLayout.closeDrawer(GravityCompat.START)
+                    binding.navHostFragment.findNavController().navigate(R.id.aboutFragment)
                     true
                 }
             }

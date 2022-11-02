@@ -22,4 +22,8 @@ object Constants {
         "All", "New", "Animals", "Technology", "Nature"
     )
 
+    const val ARG_QUERY = "argQuery"
+    const val ORDER_BY = "argOrderBy"
+    const val POPULAR = "popular"
+    const val LATEST = "latest"
 }

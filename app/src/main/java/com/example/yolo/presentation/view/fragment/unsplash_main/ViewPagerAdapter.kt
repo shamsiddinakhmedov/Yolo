@@ -10,11 +10,11 @@ class ViewPagerAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
     private val title: List<String>,
-    private val popular: String
+    private val order: String
 ) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int = 5
 
     override fun createFragment(position: Int): Fragment =
-        PhotosFragment.sendData(title[position], popular)
+        PhotosFragment.sendData(title[position], order)
 }

@@ -1,6 +1,5 @@
 package com.example.yolo.presentation.view.fragment.photo_details
 
-import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.app.WallpaperManager
 import android.content.Context
@@ -59,7 +58,6 @@ class PhotoDetailsFragment :
 
     private fun initUi() = with(binding) {
 
-        binding.apply {
             download.setOnClickListener {
                 downloadPhoto()
             }
@@ -71,7 +69,6 @@ class PhotoDetailsFragment :
             }
             like.setOnClickListener {
                 putLike()
-            }
         }
     }
 
@@ -85,7 +82,7 @@ class PhotoDetailsFragment :
         } else {
             like.setBackgroundResource(R.drawable.ic_like_empty)
         }
-        uploadPhoto(photo!!.urls.small)
+        uploadPhoto(photo!!.urls.regular)
     }
 
     private fun uploadPhoto(url: String) = with(binding) {
@@ -128,7 +125,6 @@ class PhotoDetailsFragment :
         startActivity(Intent.createChooser(intent, null))
     }
 
-    @SuppressLint("SetTextI18n")
     private fun infoPhoto() {
         val dialog = BottomSheetDialog(requireContext())
         val view = InfoBottomSheetBinding.inflate(
@@ -137,8 +133,8 @@ class PhotoDetailsFragment :
             false
         )
         view.apply {
-            link.text = "${getString(R.string.website)} ${photo.urls.full}"
-            author.text = "${getString(R.string.author)} ${photo.user.name}"
+            link.text = requireContext().getString(R.string.website, photo.urls.full)
+            author.text = requireContext().getString(R.string.author, photo.user.name)
             description.text = photo.description
         }
         dialog.setContentView(view.root)

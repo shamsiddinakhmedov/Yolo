@@ -7,14 +7,14 @@ import javax.inject.Inject
 
 class PhotoRepository @Inject constructor(private val photoApi: PhotoApi) {
 
-    fun getSearchResults(query: String) = Pager(
+    fun getSearchResults(query: String, orderedBy: String) = Pager(
         config = PagingConfig(
             pageSize = 18,
             maxSize = 90,
             enablePlaceholders = false
         ),
         pagingSourceFactory = {
-            PhotoPagingSource(photoApi, query)
+            PhotoPagingSource(photoApi, query, orderedBy)
         }
     ).flow
 }

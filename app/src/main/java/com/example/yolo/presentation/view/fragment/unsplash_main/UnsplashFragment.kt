@@ -5,11 +5,12 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.navigation.fragment.findNavController
 import com.example.yolo.R
+import com.example.yolo.app.common.Constants.LATEST
+import com.example.yolo.app.common.Constants.ORDER_BY
+import com.example.yolo.app.common.Constants.POPULAR
+import com.example.yolo.app.common.Constants.itemsNavigation
 import com.example.yolo.app.common.Constants.itemsTabLayout
 import com.example.yolo.databinding.FragmentUnsplashBinding
 import com.example.yolo.presentation.architecture.BaseFragment
@@ -20,16 +21,19 @@ import dagger.hilt.android.AndroidEntryPoint
 class UnsplashFragment : BaseFragment<FragmentUnsplashBinding>(FragmentUnsplashBinding::inflate) {
 
     private lateinit var viewPagerAdapter: ViewPagerAdapter
-    private lateinit var menuHost: MenuHost
-    private var popular: String? = null
+    private var orderBy: String = LATEST
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        orderBy = arguments?.getString(ORDER_BY) ?: LATEST
 
-        popular = arguments?.getString("popular")
+        if (orderBy == POPULAR) {
+            activity?.title = itemsNavigation[1].title
+        } else {
+            activity?.title = itemsNavigation[0].title
+        }
         initUi()
-
     }
 
     @Deprecated("Deprecated in Java")
@@ -58,39 +62,10 @@ class UnsplashFragment : BaseFragment<FragmentUnsplashBinding>(FragmentUnsplashB
 
     private fun initUi() = with(binding) {
         viewPagerAdapter =
-            ViewPagerAdapter(childFragmentManager, lifecycle, itemsTabLayout, popular.toString())
+            ViewPagerAdapter(childFragmentManager, lifecycle, itemsTabLayout, orderBy)
         viewPager.adapter = viewPagerAdapter
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = itemsTabLayout[position]
         }.attach()
     }
-
-    private fun setMenu() {
-        menuHost = requireActivity()
-        menuHost.addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu, menu)
-                val info = menu.findItem(R.id.info)
-                val share = menu.findItem(R.id.share)
-                val search = menu.findItem(R.id.search)
-
-                search.isVisible = true
-                info.isVisible = false
-                share.isVisible = false
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-
-                return when (menuItem.itemId) {
-                    R.id.search -> {
-                        Toast.makeText(requireContext(), "Click in search", Toast.LENGTH_SHORT)
-                            .show()
-                        true
-                    }
-                    else -> true
-                }
-            }
-        })
-    }
-
 }

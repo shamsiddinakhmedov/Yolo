@@ -9,23 +9,28 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import com.example.yolo.R
+import com.example.yolo.app.common.Constants.LATEST
 import com.example.yolo.databinding.FragmentSearchBinding
 import com.example.yolo.domain.model.unsplash.Photos
 import com.example.yolo.presentation.architecture.BaseFragment
-import com.example.yolo.presentation.view.fragment.photos.PhotoLoadStateAdapter
+import com.example.yolo.presentation.view.fragment.likePhotos.LikePhotosAdapter
 import com.example.yolo.presentation.view.fragment.photos.PhotosAdapter
 import com.example.yolo.presentation.view.fragment.photos.PhotosViewModel
+import com.example.yolo.presentation.view.fragment.photos.PhotosViewModel.NetworkState
+import com.example.yolo.presentation.view.fragment.photos.PhotosViewModel.NetworkState.Error
+import com.example.yolo.presentation.view.fragment.photos.PhotosViewModel.NetworkState.Loading
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
 
-    private lateinit var adapter: PhotosAdapter
+    private var adapter = PhotosAdapter(this::onClick)
     private val viewModel by viewModels<PhotosViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,6 +40,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         initUi()
 
         viewModel.state.collect(this::renderPhotos) { it.photos }
+        viewModel.state.collect(this::renderNetworkState) { it.networkState }
     }
 
     @Deprecated("Deprecated in Java")
@@ -72,7 +78,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
-                    viewModel.searchPhotos(query)
+                    viewModel.processInput(PhotosViewModel.Input.SetAttributes(query, LATEST))
+                    viewModel.searchPhotos()
                 }
                 searchView.clearFocus()
                 return true
@@ -102,20 +109,22 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         }
     }
 
-    private fun initUi() {
-        adapter = PhotosAdapter(this::onClick)
-
-        binding.apply {
-            rv.setHasFixedSize(true)
-            rv.adapter = adapter.withLoadStateHeaderAndFooter(
-                header = PhotoLoadStateAdapter { adapter.retry() },
-                footer = PhotoLoadStateAdapter { adapter.retry() }
-            )
-        }
+    private fun initUi() = with(binding) {
+        rv.adapter = adapter
+        rv.setHasFixedSize(true)
         adapter.addLoadStateListener { loadState ->
-           binding.apply {
-           }
+            viewModel.processInput(PhotosViewModel.Input.LoadStates(loadState, adapter.itemCount))
         }
+
+        retryBtn.setOnClickListener {
+            viewModel.processInput(PhotosViewModel.Input.Retry)
+        }
+    }
+
+    private fun renderNetworkState(networkState: NetworkState) = with(binding) {
+        progressBar.isVisible = networkState is Loading
+        noLoadedTv.isVisible = networkState is Error
+        retryBtn.isVisible = networkState is Error
     }
 
     private fun onClick(photos: Photos) {
